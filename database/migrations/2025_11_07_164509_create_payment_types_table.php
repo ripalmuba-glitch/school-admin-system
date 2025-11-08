@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('payment_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Contoh: SPP Bulanan, Uang Gedung, Seragam
+            $table->text('description')->nullable();
+
+            // Tipe pembayaran: sekali (once) atau bulanan (monthly)
+            $table->enum('type', ['once', 'monthly'])->default('once');
+
+            // Nominal default (jika ada)
+            $table->decimal('amount', 15, 2)->nullable();
+
+            // Relasi ke tahun ajaran (agar tagihan bisa beda tiap tahun)
+            $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('payment_types');
+    }
+};
