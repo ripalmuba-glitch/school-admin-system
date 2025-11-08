@@ -11,9 +11,12 @@
                 Laporan Absensi Siswa
             </h2>
 
-            {{-- TOMBOL DOWNLOAD DITAMBAHKAN DI SINI --}}
-            {{-- Tombol hanya tampil jika ada data (filter sudah diisi) --}}
-            @if($attendances->count() > 0)
+            {{--
+                INI ADALAH PERBAIKANNYA:
+                Menggunakan count($attendances) (fungsi PHP)
+                alih-alih $attendances->count() (metode Collection)
+            --}}
+            @if(count($attendances) > 0)
                 <div class="flex space-x-2 mt-4 md:mt-0">
                     {{-- Tombol Excel --}}
                     <a href="{{ route('admin.attendances.download', [
@@ -80,8 +83,7 @@
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-900 dark:border-gray-600 dark:text-white">
                 </div>
                 <div class="flex items-end">
-                    <button type
-="submit" class="w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-cyan-600">
+                    <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-cyan-600">
                         Tampilkan Laporan
                     </button>
                 </div>
